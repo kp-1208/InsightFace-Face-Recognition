@@ -26,7 +26,7 @@ Load the dataset as separate folders for different identities in the __/datasets
 ### Step 2:
 Provide the path of the dataset in the path argument specified in files in __/src__.
 **In preprocess_dataset.py:**
-```
+```python
 # Add the path to dataset in imagePaths.
 
 start = time.time()
@@ -38,7 +38,7 @@ print(imagePaths)
 ```
 
 **In delete_wrong_files.py:**
-```
+```python
 start = time.time()
 
 detector = MTCNN()
@@ -50,7 +50,7 @@ print(imagePaths)
 
 ### Step 3:
 Run the __/preprocess_and_train.sh__ script using the following command in __/src__.
-```
+```bash
 . preprocess_and_train.sh
 ```
 The script mentioned above executes 4 python scripts sequentially:
@@ -74,17 +74,17 @@ echo "Total Preprocessing and Training Time: $execution_time seconds"
 Now, you have the trained classifier as well as the face embeddings. Use them to inference on your custom data.
 
 **To inference on an image:**
-```
+```bash
 python insightface_image_recognition.py
 ```
 
 **To inference on a video:**
-```
+```bash
 python insightface_video_recognition.py
 ```
 
 **To inference on a video and generate detailed report with cos_similarity and probability:**
-```
+```bash
 python video_inference_with_detailed_report.py
 ```
 

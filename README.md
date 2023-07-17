@@ -25,6 +25,28 @@ Load the dataset as separate folders for different identities in the __/datasets
 
 ### Step 2:
 Provide the path of the dataset in the path argument specified in files in __/src__.
+**In preprocess_dataset.py:**
+```
+# Add the path to dataset in imagePaths.
+
+start = time.time()
+
+detector = MTCNN()
+
+imagePaths = list(paths.list_images("/home/kp1208/Desktop/InsightFace-Face-Recognition/datasets/train"))
+print(imagePaths)
+```
+
+**In delete_wrong_files.py:**
+```
+start = time.time()
+
+detector = MTCNN()
+
+target_resolution = 37632  # Provide your desired resolution here
+imagePaths = list(paths.list_images("/home/kp1208/Desktop/InsightFace-Face-Recognition/datasets/train"))
+print(imagePaths)
+```
 
 ### Step 3:
 Run the __/preprocess_and_train.sh__ script using the following command in __/src__.
@@ -32,7 +54,21 @@ Run the __/preprocess_and_train.sh__ script using the following command in __/sr
 . preprocess_and_train.sh
 ```
 The script mentioned above executes 4 python scripts sequentially:
-__/preprocess_dataset.py__ -> __/delete_wrong_files.py__ -> __/faces_embedding.py__ -> __/train_softmax.py__
+```
+#!/bin/bash
+
+start_time=$(date +%s.%N)
+
+python /home/kp1208/Desktop/InsightFace-Face-Recognition/src/preprocess_dataset.py
+python /home/kp1208/Desktop/InsightFace-Face-Recognition/src/delete_wrong_files.py
+python /home/kp1208/Desktop/InsightFace-Face-Recognition/src/faces_embedding.py
+python /home/kp1208/Desktop/InsightFace-Face-Recognition/src/train_softmax.py
+
+end_time=$(date +%s.%N)
+execution_time=$(echo "$end_time - $start_time" | bc)
+
+echo "Total Preprocessing and Training Time: $execution_time seconds"
+```
 
 ### Step 4:
 Now, you have the trained classifier as well as the face embeddings. Use them to inference on your custom data.
